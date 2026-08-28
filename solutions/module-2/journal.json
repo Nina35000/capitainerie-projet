@@ -1,0 +1,7 @@
+[
+  { "date": "2026-07-28", "sujet": "JavaScript", "minutes": 90, "note": "Boucles et objets, ça rentre !" },
+  { "date": "2026-07-29", "sujet": "CSS", "minutes": 45, "note": "Flexbox, retour aux sources" },
+  { "date": "2026-07-30", "sujet": "JavaScript", "minutes": 120, "note": "Le bateau tourne enfin correctement" },
+  { "date": "2026-07-31", "sujet": "SVG", "minutes": 30, "note": "Dessiné une voile digne de ce nom" },
+  { "date": "2026-08-01", "sujet": "JavaScript", "minutes": 75, "note": "Vecteurs et inertie, dur mais génial" }
+]

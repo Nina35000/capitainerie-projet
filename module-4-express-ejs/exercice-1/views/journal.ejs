@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+        <meta charset="UTF-8" />
+        <title>Journal de bord</title>
+        <style>
+            body {
+                font-family: sans-serif;
+                max-width: 600px;
+                margin: 2rem auto;
+            }
+            li {
+                margin: 0.3rem 0;
+            }
+        </style>
+    </head>
+    <body>
+        <!-- ============================================================
+       Étape 3a : affiche la variable `titre` dans le <h1>
+       (balise <%%= ... %> — celle qui AFFICHE)
+       ============================================================ -->
+        <h1>journal de bord</h1>
+
+        <!-- ============================================================
+       Étape 3b : affiche la liste des sessions.
+       Une boucle <%% for (const s of sessions) { %> ... <%% } %>
+       autour d'un <li> qui affiche :  "2026-08-02 — Node (60 min)"
+       ============================================================ -->
+      <ul>
+          <% for (const s of sessions) { %>
+        <li><%= s.date %> — <%= s.sujet %> (<%= s.minutes %> min)</li>
+           <% } %>
+      </ul>
+
+      <% if (sessions.length === 0) { %>
+      <p>Aucune session ici pour l'instant.</p>
+      <% } %><% if (sessions.length === 0) { %>
+      <p>Aucune session ici pour l'instant.</p>
+      <% } %>
+      <p>Total : <%= total %> minutes</p>
+        <!-- ============================================================
+       Étape 3c : si le tableau est vide (sessions.length === 0),
+       affiche <p>Aucune session ici pour l'instant.</p>
+       (balise <%% if ... %> — celle qui EXÉCUTE sans afficher)
+       ============================================================ -->
+
+        <!-- Étape 5 (bonus) : le total des minutes, envoyé par le serveur -->
+    </body>
+</html>

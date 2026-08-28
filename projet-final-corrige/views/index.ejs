@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title><%= titre %></title>
+  <style>
+    /* Étape 6 : le coup de peinture — bleu marine, blanc, rouge bouée ⚓ */
+    :root {
+      --marine: #14213d; --ocean: #2a6f97; --ecume: #f4f7f9; --bouee: #e63946;
+    }
+    * { box-sizing: border-box; }
+    body {
+      font-family: Georgia, serif;
+      background: var(--ecume);
+      color: var(--marine);
+      max-width: 680px;
+      margin: 2rem auto;
+      padding: 0 1rem;
+    }
+    h1 { border-bottom: 3px double var(--ocean); padding-bottom: 0.4rem; }
+    a { color: var(--ocean); }
+
+    .stats { display: flex; gap: 1rem; flex-wrap: wrap; margin: 1.2rem 0 0.4rem; }
+    .stats div {
+      background: white; border: 1px solid var(--ocean);
+      border-radius: 8px; padding: 0.6rem 1rem; flex: 1;
+      text-align: center; min-width: 150px;
+    }
+    .stats strong { display: block; font-size: 1.3rem; }
+
+    /* Bonus : la jauge d'occupation du quai */
+    .jauge { background: white; border: 1px solid var(--ocean); border-radius: 8px;
+             padding: 0.5rem 1rem; margin-bottom: 1.2rem; font-size: 0.9rem; }
+    .jauge .barre { background: #dbe4ea; border-radius: 4px; height: 10px; margin-top: 0.3rem; }
+    .jauge .rempli { background: var(--ocean); border-radius: 4px; height: 10px; }
+
+    .carte {
+      background: white; border-left: 5px solid var(--ocean);
+      border-radius: 6px; padding: 0.7rem 1rem; margin: 0.6rem 0;
+      display: flex; justify-content: space-between; align-items: center; gap: 0.5rem;
+    }
+    .carte .nom { font-weight: bold; font-size: 1.05rem; }
+    .carte .detail { color: #555; font-size: 0.9rem; }
+    .ponton {
+      background: var(--marine); color: white; border-radius: 4px;
+      padding: 0.1rem 0.5rem; font-size: 0.8rem; font-family: sans-serif;
+    }
+    .depart button {
+      background: none; border: 1px solid var(--bouee); color: var(--bouee);
+      border-radius: 4px; padding: 0.25rem 0.6rem; cursor: pointer; font: inherit;
+      font-size: 0.85rem;
+    }
+    .depart button:hover { background: var(--bouee); color: white; }
+
+    form.accostage {
+      background: white; border: 1px dashed var(--ocean); border-radius: 8px;
+      padding: 1rem; margin-top: 2rem; display: grid; gap: 0.6rem;
+    }
+    form.accostage label { display: grid; gap: 0.2rem; font-size: 0.9rem; }
+    form.accostage input, form.accostage select {
+      padding: 0.4rem; border: 1px solid #bbb; border-radius: 4px; font: inherit;
+    }
+    form.accostage button {
+      background: var(--marine); color: white; border: none;
+      padding: 0.5rem 1.4rem; border-radius: 4px; cursor: pointer;
+      width: fit-content; font: inherit;
+    }
+  </style>
+</head>
+<body>
+  <h1>⚓ <%= titre %></h1>
+
+  <!-- Étape 4 : le lien de retour, seulement en mode filtré -->
+  <% if (filtreType !== null) { %>
+    <p><a href="/">← Tout le port</a></p>
+  <% } %>
+
+  <!-- Étape 3 : les chiffres du port (calculés par le serveur) -->
+  <div class="stats">
+    <div><strong><%= stats.nombre %></strong> navire<%= stats.nombre > 1 ? "s" : "" %> à quai</div>
+    <div><strong><%= stats.metres %> m</strong> de quai occupés</div>
+    <% if (stats.majoritaire !== null) { %>
+      <div><strong><%= stats.majoritaire %></strong> type majoritaire</div>
+    <% } %>
+  </div>
+
+  <!-- Bonus étape 7 : le taux d'occupation (seulement hors filtre,
+       car la capacité concerne le port entier) -->
+  <% if (filtreType === null) { %>
+    <div class="jauge">
+      Occupation du quai : <%= stats.metres %> m / <%= capacite %> m
+      <div class="barre">
+        <div class="rempli" style="width: <%= Math.min(100, Math.round(stats.metres / capacite * 100)) %>%"></div>
+      </div>
+    </div>
+  <% } %>
+
+  <!-- Étape 1 : le registre, dernier arrivé en premier (trié côté serveur) -->
+  <% if (navires.length === 0) { %>
+    <p>Aucun navire à ce quai. Le port est calme…</p>
+  <% } %>
+
+  <% for (const n of navires) { %>
+    <div class="carte">
+      <div>
+        <span class="nom"><%= n.nom %></span>
+        <% if (n.pavillon) { %> <%= n.pavillon %><% } %>
+        <span class="ponton">Ponton <%= n.ponton %></span>
+        <div class="detail">
+          <!-- Étape 4 : le type est un lien vers sa page filtrée -->
+          <a href="/type/<%= n.type %>"><%= n.type %></a>
+          · <%= n.longueur %> m ·
+          <!-- Étape 1 : la durée du séjour, avec le cas "aujourd'hui" -->
+          <% const jours = joursAQuai(n.arriveLe); %>
+          <% if (jours === 0) { %>
+            arrivé aujourd'hui
+          <% } else { %>
+            à quai depuis <%= jours %> jour<%= jours > 1 ? "s" : "" %>
+          <% } %>
+        </div>
+      </div>
+      <!-- Étape 5 : lever l'ancre — POST + champ caché avec la position
+           réelle dans le fichier. Jamais de suppression en GET ! -->
+      <form class="depart" method="POST" action="/depart">
+        <input type="hidden" name="index" value="<%= n.index %>">
+        <button title="Ce navire quitte le port">⚓ Lever l'ancre</button>
+      </form>
+    </div>
+  <% } %>
+
+  <!-- Étape 2 : le formulaire d'accostage (POST → redirect → GET) -->
+  <form class="accostage" method="POST" action="/accoster">
+    <label>Nom du navire
+      <input name="nom" required placeholder="L'Hirondelle, Zéphyr…">
+    </label>
+    <label>Type
+      <select name="type">
+        <option>Voilier</option>
+        <option>Yacht</option>
+        <option>Chalutier</option>
+        <option>Catamaran</option>
+      </select>
+    </label>
+    <label>Ponton
+      <select name="ponton">
+        <option>A</option>
+        <option>B</option>
+        <option>C</option>
+      </select>
+    </label>
+    <label>Longueur (mètres)
+      <input name="longueur" type="number" min="1" required>
+    </label>
+    <label>Pavillon (bonus)
+      <select name="pavillon">
+        <option value="">—</option>
+        <option>🇫🇷</option>
+        <option>🇬🇧</option>
+        <option>🇪🇸</option>
+        <option>🇮🇹</option>
+        <option>🇵🇹</option>
+      </select>
+    </label>
+    <button type="submit">Enregistrer l'accostage</button>
+  </form>
+</body>
+</html>

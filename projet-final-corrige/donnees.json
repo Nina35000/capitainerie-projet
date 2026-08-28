@@ -1,0 +1,50 @@
+[
+  {
+    "nom": "L'Hirondelle",
+    "type": "Voilier",
+    "ponton": "A",
+    "longueur": 9,
+    "arriveLe": "2026-07-25",
+    "pavillon": "🇫🇷"
+  },
+  {
+    "nom": "Marie-Morgane",
+    "type": "Chalutier",
+    "ponton": "B",
+    "longueur": 15,
+    "arriveLe": "2026-07-28",
+    "pavillon": "🇫🇷"
+  },
+  {
+    "nom": "Cap Horn",
+    "type": "Yacht",
+    "ponton": "C",
+    "longueur": 24,
+    "arriveLe": "2026-07-30",
+    "pavillon": "🇬🇧"
+  },
+  {
+    "nom": "Zéphyr",
+    "type": "Voilier",
+    "ponton": "A",
+    "longueur": 11,
+    "arriveLe": "2026-08-01",
+    "pavillon": "🇮🇹"
+  },
+  {
+    "nom": "la méduse",
+    "type": "Voilier",
+    "ponton": "A",
+    "longueur": 12,
+    "arriveLe": "2026-08-02",
+    "pavillon": "🇫🇷"
+  },
+  {
+    "nom": "l'hermione",
+    "type": "Voilier",
+    "ponton": "B",
+    "longueur": 25,
+    "arriveLe": "2026-08-02",
+    "pavillon": "🇫🇷"
+  }
+]

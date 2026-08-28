@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Journal de bord</title>
+  <style>
+    body { font-family: sans-serif; max-width: 600px; margin: 2rem auto; }
+    li { margin: 0.3rem 0; }
+    form { margin-top: 2rem; display: grid; gap: 0.5rem; }
+    label { display: grid; }
+    button { width: fit-content; padding: 0.4rem 1.2rem; }
+  </style>
+</head>
+<body>
+  <h1>Journal de bord</h1>
+
+  <!-- Étape 2 : la liste des sessions (boucle EJS, comme au module 4) -->
+ <ul>
+  <% for (const s of sessions) { %>
+  <li><%= s.date %> — <%= s.sujet %> (<%= s.minutes %> min)</li>
+  <% } %>
+</ul>
+
+<form method="POST" action="/ajouter">
+  <label>Sujet : <input name="sujet" required></label>
+  <label>Minutes : <input name="minutes" type="number" required></label>
+  <label>Note : <input name="note"></label>
+  <button type="submit">Ajouter</button>
+</form>
+
+  <!-- Étape 3 : le formulaire d'ajout (method POST, action /ajouter,
+       champs sujet / minutes / note — chacun avec son name !) -->
+
+</body>
+</html>

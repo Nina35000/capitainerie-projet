@@ -1,0 +1,4 @@
+[
+  { "date": "2026-08-01", "sujet": "JavaScript", "minutes": 75, "note": "Vecteurs et inertie" },
+  { "date": "2026-08-02", "sujet": "Node", "minutes": 60, "note": "Premier serveur Express" }
+]

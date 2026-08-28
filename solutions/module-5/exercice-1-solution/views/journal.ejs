@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Journal de bord</title>
+  <style>
+    body { font-family: sans-serif; max-width: 600px; margin: 2rem auto; }
+    li { margin: 0.3rem 0; }
+    form { margin-top: 2rem; display: grid; gap: 0.5rem; }
+    label { display: grid; }
+    button { width: fit-content; padding: 0.4rem 1.2rem; }
+  </style>
+</head>
+<body>
+  <h1>Journal de bord</h1>
+
+  <!-- Étape 2 : la liste -->
+  <ul>
+    <% for (const s of sessions) { %>
+      <li>
+        <%= s.date %> — <%= s.sujet %> (<%= s.minutes %> min)
+        <% if (s.note) { %> : <em><%= s.note %></em><% } %>
+      </li>
+    <% } %>
+  </ul>
+
+  <!-- Étape 3 : le formulaire — method POST, action /ajouter,
+       et surtout un name sur CHAQUE champ -->
+  <form method="POST" action="/ajouter">
+    <label>Sujet
+      <input name="sujet" required>
+    </label>
+    <label>Minutes
+      <input name="minutes" type="number" min="1" required>
+    </label>
+    <label>Note
+      <input name="note">
+    </label>
+    <button type="submit">Ajouter</button>
+  </form>
+</body>
+</html>

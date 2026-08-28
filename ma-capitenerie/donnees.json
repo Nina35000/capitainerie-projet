@@ -1,0 +1,23 @@
+[
+  {
+    "nom": "Le Corsaire",
+    "type": "Yacht",
+    "ponton": "B",
+    "longueur": 14,
+    "arriveLe": "2026-08-01"
+  },
+  {
+    "nom": "Belle Étoile",
+    "type": "Catamaran",
+    "ponton": "A",
+    "longueur": 11,
+    "arriveLe": "2026-08-10"
+  },
+  {
+    "nom": "guilian",
+    "type": "Voilier",
+    "ponton": "A",
+    "longueur": 9,
+    "arriveLe": "2026-08-27"
+  }
+]
